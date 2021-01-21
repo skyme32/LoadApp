@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/content_detail_scene"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <Button
+        android:id="@+id/btn_ok_detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/colorAccent"
+        android:text="@string/btn_ok"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_file_name"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/file_name"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_status"
+        app:layout_constraintEnd_toStartOf="@+id/txt_file_name_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_file_name_desc"
+        style="@style/radiogroupStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/txt_glide_radiogroup"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_file_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_file_name"
+        app:layout_constraintTop_toTopOf="@+id/txt_file_name"
+        tools:text="@string/txt_glide_radiogroup" />
+
+    <TextView
+        android:id="@+id/txt_desc_status"
+        style="@style/radiogroupStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_success"
+        android:textAlignment="viewStart"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_status"
+        app:layout_constraintStart_toStartOf="@+id/txt_file_name_desc"
+        app:layout_constraintTop_toTopOf="@+id/txt_status"
+        tools:text="@string/txt_success" />
+
+    <TextView
+        android:id="@+id/txt_status"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/txt_status"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/txt_file_name"
+        app:layout_constraintStart_toStartOf="@+id/txt_file_name"
+        app:layout_constraintTop_toBottomOf="@+id/txt_file_name" />
+
+    <ImageView
+        android:id="@+id/img_dowload_state"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/img_description_download"
+        app:layout_constraintBottom_toTopOf="@+id/btn_ok_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_status"
+        app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
+</androidx.constraintlayout.motion.widget.MotionLayout>
