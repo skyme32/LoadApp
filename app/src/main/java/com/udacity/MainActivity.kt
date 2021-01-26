@@ -29,9 +29,10 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private var downloadID: Long = 0
-    var textFilename = ""
-    private lateinit var downloadManager: DownloadManager
+    private var textFilename = ""
+    private var statuBoolean = false
 
+    private lateinit var downloadManager: DownloadManager
     private lateinit var notificationManager: NotificationManager
     private lateinit var action: NotificationCompat.Action
 
@@ -46,18 +47,27 @@ class MainActivity : AppCompatActivity() {
         custom_button.setOnClickListener {
             when {
                 radio_btn_glide.isChecked -> {
-                    download(URL_GLIDE)
                     textFilename = getString(R.string.txt_glide_radiogroup)
+                    download(URL_GLIDE)
                 }
                 radio_btn_loadapp.isChecked -> {
-                    download(URL_PROJECT)
                     textFilename = getString(R.string.txt_loadapp_radiogroup)
+                    download(URL_PROJECT)
                 }
                 radio_btn_retrofit.isChecked -> {
                     download(URL_RETROFIT)
                     textFilename = getString(R.string.txt_retrofit_radiogroup)
                 }
-                else -> Toast.makeText(this, "Please, check the list", Toast.LENGTH_SHORT).show()
+                else -> {
+                    if (edt_urlweb.text.isEmpty()) {
+                        Toast.makeText(this, "Please, check the list", Toast.LENGTH_SHORT).show()
+                    } else {
+                        textFilename = edt_urlweb.text.toString()
+                        download(edt_urlweb.text.toString())
+                        Toast.makeText(this, textFilename, Toast.LENGTH_SHORT).show()
+                    }
+
+                }
             }
 
         }
@@ -76,12 +86,8 @@ class MainActivity : AppCompatActivity() {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             Log.i("statusDownload", id.toString())
 
-            var intentContent = Intent(applicationContext, DetailActivity::class.java).apply {
-                putExtra(EXTRA_MESSAGE, textFilename)
-            }
 
             val c = downloadManager.query(DownloadManager.Query().setFilterById(downloadID))
-
             if (c.moveToFirst()) {
                 val status: Int = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS))
                 Log.i("statusDownload", status.toString())
@@ -89,18 +95,15 @@ class MainActivity : AppCompatActivity() {
                 when (status) {
                     DownloadManager.STATUS_FAILED -> {
                         Log.i("statusDownload", "Failed")
-                        intentContent.putExtra(EXTRA_MESSAGE_STATE, false)
+                        statuBoolean = false
                     }
                     DownloadManager.STATUS_SUCCESSFUL -> {
                         Log.i("statusDownload", "Finish")
-                        intentContent.putExtra(EXTRA_MESSAGE_STATE, true)
+                        statuBoolean = true
                     }
                 }
 
-                custom_button.setBtnState(ButtonState.Completed)
-                sendNotification(intentContent)
-                radio_group.clearCheck()
-
+                sendNotification()
                 c.close()
             }
         }
@@ -108,16 +111,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun download(url: String) {
         custom_button.setBtnState(ButtonState.Loading)
-        val request =
-            DownloadManager.Request(Uri.parse(url))
-                .setTitle(getString(R.string.app_name))
-                .setDescription(getString(R.string.app_description))
-                .setRequiresCharging(false)
-                .setAllowedOverMetered(true)
-                .setAllowedOverRoaming(true)
 
-        downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        downloadID = downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+        try {
+            val request =
+                    DownloadManager.Request(Uri.parse(url))
+                            .setTitle(getString(R.string.app_name))
+                            .setDescription(getString(R.string.app_description))
+                            .setRequiresCharging(false)
+                            .setAllowedOverMetered(true)
+                            .setAllowedOverRoaming(true)
+
+            downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            downloadID = downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+        } catch (e: Exception) {
+            statuBoolean = false
+            sendNotification()
+            Log.i("statusDownload", "FAILED")
+        }
     }
 
 
@@ -137,19 +147,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun sendNotification(intentContent: Intent) {
-        val contentPendingIntent = PendingIntent.getActivity(
-                applicationContext,
-                NOTIFICATION_ID,
-                intentContent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
+    private fun sendNotification() {
         notificationManager.sendNotification(
                 getString(R.string.notification_description),
                 applicationContext,
-                contentPendingIntent
+                textFilename,
+                statuBoolean
         )
+
+        radio_group.clearCheck()
+        edt_urlweb.text.clear()
+        custom_button.setBtnState(ButtonState.Completed)
 
         Log.i("statusDownload", "Send notification")
     }

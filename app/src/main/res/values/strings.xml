@@ -27,5 +27,6 @@
     <string name="txt_success">Success</string>
     <string name="txt_fail">Fail</string>
     <string name="txt_status">Status:</string>
+    <string name="edt_text">Add the URL web</string>
 
 </resources>

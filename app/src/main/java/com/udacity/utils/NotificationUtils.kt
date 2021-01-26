@@ -3,8 +3,11 @@ package com.udacity.utils
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import androidx.core.app.NotificationCompat
+import com.udacity.MainActivity
 import com.udacity.R
+import com.udacity.detail.DetailActivity
 
 
 const val NOTIFICATION_ID = 0
@@ -18,8 +21,20 @@ const val NOTIFICATION_ID = 0
 fun NotificationManager.sendNotification(
     messageBody: String,
     applicationContext: Context,
-    contentPendingIntent: PendingIntent
+    textFilename: String,
+    status: Boolean
 ) {
+    var intentContent = Intent(applicationContext, DetailActivity::class.java).apply {
+        putExtra(MainActivity.EXTRA_MESSAGE, textFilename)
+        putExtra(MainActivity.EXTRA_MESSAGE_STATE, status)
+    }
+
+    val contentPendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            NOTIFICATION_ID,
+            intentContent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+    )
 
     val builder = NotificationCompat.Builder(
         applicationContext,
