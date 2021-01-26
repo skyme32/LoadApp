@@ -34,16 +34,23 @@
         app:layout_constraintTop_toTopOf="@+id/view"
         app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
 
-    <com.udacity.LoadingButton
+    <com.udacity.ui.LoadingButton
         android:id="@+id/custom_button"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_margin="20dp"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        app:fanColor1="@color/colorPrimary"
+        app:fanColor2="@color/colorPrimaryDark"
+        app:textColor="@color/white"
+        app:textSize="56"
+        app:circleColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

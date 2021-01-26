@@ -4,10 +4,13 @@
     <string name="action_settings">Settings</string>
 
 
+    <!-- Srings of notification -->
     <string name="notification_title">Udacity: Android Kotlin Nanodegree </string>
     <string name="notification_description">The Project 3 repository is downloaded</string>
     <string name="notification_button">See changes</string>
+    <string name="notification_channel_id" translatable="false">channel</string>
 
+    <!-- Srings of button -->
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
@@ -16,7 +19,7 @@
     <!-- Srings of radiogrup -->
     <string name="txt_glide_radiogroup">Glide - Image Bulding library by BumpTech</string>
     <string name="txt_loadapp_radiogroup">LoadApp - Current repository by Udacity</string>
-    <string name="txt_retrofit_radiogroup">Retrofit - -Type-safe HTTP client for Android and Java by Square, Inc</string>
+    <string name="txt_retrofit_radiogroup">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc</string>
 
     <!-- String to Detail View -->
     <string name="btn_ok">ok</string>
