@@ -19,17 +19,17 @@ const val NOTIFICATION_ID = 0
  * @param context, activity context.
  */
 fun NotificationManager.sendNotification(
-    messageBody: String,
-    applicationContext: Context,
-    textFilename: String,
-    status: Boolean
+        messageBody: String,
+        applicationContext: Context,
+        textFilename: String,
+        status: Boolean
 ) {
     var intentContent = Intent(applicationContext, DetailActivity::class.java).apply {
         putExtra(MainActivity.EXTRA_MESSAGE, textFilename)
         putExtra(MainActivity.EXTRA_MESSAGE_STATE, status)
     }
 
-    val contentPendingIntent = PendingIntent.getActivity(
+    val pendingIntent = PendingIntent.getActivity(
             applicationContext,
             NOTIFICATION_ID,
             intentContent,
@@ -37,15 +37,21 @@ fun NotificationManager.sendNotification(
     )
 
     val builder = NotificationCompat.Builder(
-        applicationContext,
-        applicationContext.getString(R.string.notification_channel_id)
+            applicationContext,
+            applicationContext.getString(R.string.notification_channel_id)
     )
-        .setSmallIcon(R.drawable.ic_assistant_black_24dp)
-        .setContentTitle(applicationContext
-            .getString(R.string.notification_title))
-        .setContentText(messageBody)
-        .setContentIntent(contentPendingIntent)
-        .setAutoCancel(true)
+            .setSmallIcon(R.drawable.ic_assistant_black_24dp)
+            .setContentTitle(applicationContext
+                    .getString(R.string.notification_title))
+            .setContentText(messageBody)
+            .setAutoCancel(true)
+            .addAction(
+                    NotificationCompat.Action(
+                            null,
+                            applicationContext.getString(R.string.view_details),
+                            pendingIntent
+                    )
+            )
 
     notify(NOTIFICATION_ID, builder.build())
 
